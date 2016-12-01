@@ -1,0 +1,50 @@
+<block className="MLClock"> 
+		
+		<bind name="collectionDH" value="CC.userPrefs; 'userPrefsCollection'"/>
+        <bind name="entityDH" value="'userPrefsEntity'; userPrefsCollection[0].id"/>
+		<bind name="watchDH" value="'userPrefs'; ['userPrefsEntity.userPrefs.evUserPrefsChanged']; userPrefsEntity.userPrefs.userPrefs"/>
+		
+		<bind name="draggable" value="'MLCDragZone'; 'IMPosition'; 'MLC'"/>
+		<bind name="watch" value="'MLCPositionX'; (userPrefs.IMPositionX.MLC == null)  ? ((stageSize.x / 2)+350) : userPrefs.IMPositionX.MLC"/>
+        <bind name="watch" value="'MLCPositionY'; (userPrefs.IMPositionY.MLC == null)  ? '0' :  userPrefs.IMPositionY.MLC"/>
+        <bind name="left" value="MLCPositionX"/>
+        <bind name="top" value="MLCPositionY"/>
+		<block>	
+			<bind name="appear" value="'addedToStage'; 0.6; 0; {alpha: 0}; {alpha: 1}"/>
+			<bind name="watch" value=" 'clockEnabled'; (userPrefs.elementsGroupExpand.clockEnabled == null) ? true : userPrefs.elementsGroupExpand.clockEnabled "/>
+			<bind name="visible" value="clockEnabled"/>
+	
+			
+			
+				<block className="contrast_panel" type="native">
+					<styleClass value="$FullsizeAbsolute"/>
+					<bind name="visible" value="true"/>
+					<style>
+						<marginTop value="-2px"/>
+						<marginBottom value="-2px"/>
+					</style>
+					<bind name="style" value="'alpha'; 0.4"/>
+				</block>
+			
+			<block>						
+				<block type="text">
+					<styleClass value="$TextDefaultBold"/>
+					<style>
+						<textAlign value="center"/>
+						<textColor value="0xEEEEEE"/> <!-- font color -->
+						<fontSize value="20"/> <!-- font size -->
+					</style>
+					<bind name="clock" value="'timeText'; 'hh:mm:ss'"/>
+					<bind name="pureText" value="'' + timeText"/>
+				</block>
+				<params>
+					<param name="name" value="MLCDragZone"/>
+				</params>
+			</block>
+		</block>
+		<style>
+			<width value="200px"/>
+			<height value="26px"/>
+			<position value="absolute"/>
+		</style>	
+	</block>

@@ -1,0 +1,9 @@
+<css name="$TextDefault">
+		<fontFamily value="$WWSDefaultFont"/>
+		<mouseEnabled value="false"/>
+		<mouseChildren value="false"/>
+		<fontSize value="15"/>
+		<dropShadowFilter value="0 90 0x000000 1.0 2.0 2.0 1.0 1"/>
+		<selectable value="false"/>
+		<textColor value="0xEEEEEE"/>
+	</css>

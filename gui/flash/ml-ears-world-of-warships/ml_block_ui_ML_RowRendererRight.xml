@@ -1,0 +1,451 @@
+<block className="ML_RowRendererRight">            
+        <bind name="entityDH" value="'playerInfo'; id"/>
+        <bind name="watchDH" value="'is_self'; ['playerInfo.relation.evChanged']; playerInfo.relation.value == 0"/>
+        <bind name="watchDH" value="'is_alive'; ['playerInfo.avatar.evKilled']; playerInfo.avatar.isAlive"/>
+        <bind name="watchDH" value="'tkStatus'; ['playerInfo.avatar.evTeamkillStatusChanged']; playerInfo.avatar.tkStatus"/>
+        <bind name="watchDH" value="'division'; ['playerInfo.avatar.evDivisionChanged']; playerInfo.avatar.division"/>
+	<bind name="watchDH" value="'isInSameDivision'; ['playerInfo.avatar.evDivisionChanged']; playerInfo.avatar.isInSameDivision"/>
+        <bind name="watchDH" value="'divisionSign'; ['playerInfo.avatar.evDivisionChanged']; playerInfo.avatar.divisionSign"/>
+        <bind name="watchDH" value="'statistics'; ['playerInfo.statistics.evChanged']; playerInfo.statistics.statistics"/>
+	<bind name="watchDH" value="'shipInfo'; ['playerInfo.shipInfo.evChanged']; playerInfo.shipInfo.shipInfo"/>
+	<bind name="watchDH" value="'flags'; ['playerInfo.target.evChanged']; playerInfo.target.flags"/>
+	<bind name="watchDH" value="'statistics'; ['playerInfo.statistics.evChanged']; playerInfo.statistics.statistics"/>
+        
+        <bind name="clickSplit"/> <!-- for left_click -->
+        <bind name="call" value="'left_click'; 'camera.moveCameraToPlayer'; playerInfo.avatar.id"/>
+        
+        <bind name="var" value="{healthP:'100%'}"/>
+        <bind name="watchDH" value="'healthP'; ['playerInfo.health.evValueChanged']; (((playerInfo.health.value &gt; 0) &amp;&amp; is_alive) ? ((100 * playerInfo.health.value / playerInfo.health.max) + '%'): ( is_alive ? healthP: '0%'))"/>
+        <bind name="dataRefDH" value="'ship'; 'playerInfo.avatar.ship.ref.ship'"/>
+        
+        <block>
+            <style>
+                <width value="100%"/>
+                <height value="100%"/>
+                <position value="absolute"/>
+            </style>
+            <block>
+                <style>
+                    <width value="100%"/>
+                    <height value="100%"/>
+                    <blurFilter value="2 2"/>
+                    <backgroundColor value="0x40000000"/>
+                </style>
+            </block>
+        </block>
+		
+		<block className="HealthRowHolder">
+            <style>
+                <width value="100%"/>
+                <height value="100%"/>
+                <position value="absolute"/>
+				<top value="100%"/>
+            </style>
+            
+            <block className="HealthRow">
+				<style>
+					<width value="100%"/>
+					<height value="100%"/>
+					<blurFilter value="2 2"/>
+					<position value="absolute"/>
+					<align value="right"/>
+					<left value="100%"/>
+				</style>
+				<bind name="scaleX" value="-1"/>
+				<bind name="style" value="'alpha'; alphaHPbar"/>
+				<bind name="style" value="'width'; healthP"/>
+				<bind name="style" value="'height'; heightHP"/>
+				<bind name="scaleY" value="-1"/>
+				<bind name="style" value="'backgroundColor'; (colorHP == 1) ? '0xFF00AA00' : '0xFFE60028'"/>
+				<bind name="visible" value="is_alive? showHP : false"/>
+            </block>
+        </block>
+        
+            
+        <bind name="var" value="{wasVisible:false}"/>
+        <bind name="watchDH" value="'visible'; ['playerInfo.visibility.evChanged']; playerInfo.visibility.mapVisible"/>
+        <bind name="watchDH" value="'wasVisible'; ['playerInfo.visibility.evChanged']; playerInfo.visibility.mapVisible || wasVisible "/>
+		<block>
+			<style>
+				<width value="90"/>
+				<marginTop value="0px"/>			
+			</style>
+			<bind name="visible" value="useStats"/>
+			<bind name="style" value="'width'; useStats ? (scalePanels*90) : '0px'"/>
+			<block type="text"> <!-- RPOAlfa -->
+	            <bind name="text" value="statistics.all_rate"/>
+	            <bind name="style" value="'textColor'; ('0x'+statistics.all_rate_color)"/>
+	            <bind name="visible" value="useStats &amp;&amp; showRating &amp;&amp; statistics.real_data"/>
+				<styleClass value="$FontSizeML"/>
+	            <bind name="class" value="'$Bold'"/>
+				<style>
+	                <position value="absolute"/>
+					<right value="50%"/>
+					<width value="45"/>
+	                <fontSize value="18"/>
+					<marginLeft value="1px"/>
+	            </style>
+				<bind name="style" value="'fontSize'; (scalePanels*18)"/>
+				<bind name="style" value="'width'; useStats ? (scalePanels*45) : '0px'"/>
+				<bind name="style" value="'right'; showWR ? '50%' : '5%'"/>
+				<bind name="alpha" value="(!is_alive)?0.7:1"/>
+	        </block>
+			<block type="text"> <!-- Winrate -->
+	            <bind name="text" value="statistics.all_wins + '%'"/>
+	            <bind name="style" value="'textColor'; ('0x'+statistics.all_wins_color)"/>
+				<styleClass value="$FontSizeML"/>
+	            <bind name="class" value="'$Bold'"/>
+	            <bind name="visible" value="useStats &amp;&amp; showWR &amp;&amp; statistics.real_data"/>
+				<style>
+	                <position value="absolute"/>
+					<right value="5%"/>
+					<width value="45"/>
+	                <fontSize value="18"/>
+					<marginLeft value="1px"/>
+	            </style>
+				<bind name="style" value="'fontSize'; (scalePanels*18)"/>
+				<bind name="style" value="'width'; useStats ? (scalePanels*45) : '0px'"/>
+				<bind name="alpha" value="(!is_alive)?0.7:1"/>
+	        </block>
+		</block>
+        <block type="text"> <!-- Lamp -->
+            <bind name="text" value="'A'"/>
+            <styleClass value="$TextDefault"/>
+            <bind name="style" value="'textColor'; visible ? '0xDDffa500': '0xDDcccccc'"/>
+            <bind name="scaleY" value="(wasVisible &amp;&amp; is_alive) ? 1 : 0"/>
+            <bind name="visible" value="showLamp"/>
+            <style>
+                <width value="20"/>
+                <fontFamily value="ML_WOWSSymbol"/>
+                <marginRight value="5px"/>
+                <fontSize value="18"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*24)"/>
+			<bind name="style" value="'width'; (scalePanels*14)"/>
+        </block>
+        <block type="text"> <!-- placeholder -->
+            <bind name="text" value="' '"/>
+            <styleClass value="$TextDefault"/>
+            <bind name="style" value="'textColor'; visible ? '0xDDffa500': '0xDDcccccc'"/>
+            <bind name="scaleY" value="(wasVisible &amp;&amp; is_alive) ? 1 : 0"/>
+            <bind name="visible" value="!showLamp"/>
+            <style>
+                <width value="20"/>
+                <marginRight value="5px"/>
+                <fontSize value="18"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*18)"/>
+        </block>
+                
+		<block className="Icons"><!-- Icons -->
+            <style>
+			    <marginLeft value="122px"/>
+                <width value="10px"/>
+                <height value="22"/>
+				<marginTop value="2px"/>
+            </style>
+			<bind name="style" value="'marginLeft'; (showIcons ? ((customIcons==0) ? (scalePanels*122) : '10px' ): '0px')"/>
+			<bind name="style" value="'width'; (showIcons ? ((customIcons==0) ? (scalePanels*10) : (scalePanels*122)) : '0px')"/>		
+			<bind name="style" value="'marginTop'; (scalePanels*2)"/>	
+            <bind name="scaleX" value="(customIcons!=0) ? (scalePanels*1) : (scalePanels*(-1))"/>
+			<bind name="scaleY" value="(scalePanels*1)"/>
+			<bind name="style" value="'backgroundImage'; (customIcons==0) ? ('url:../ship_icons/' + playerInfo.avatar.ship.ref.ship.shortName + '.png') : ('url:../ship_icons/' + playerInfo.avatar.ship.ref.ship.shortName + '.png')"/>
+			<bind name="alpha" value="(!is_alive)?0.6:1"/>
+			<bind name="visible" value="showIcons"/>
+        </block>
+		
+        <bind name="watchDH" value="'frags'; ['playerInfo.avatar.evFragsChanged']; playerInfo.avatar.frags"/>
+        <block type="text"> <!-- Frags -->
+            <bind name="text" value="frags"/>
+            <styleClass value="$FontSizeML"/>
+			<bind name="class" value="'$Bold'"/>
+            
+            <bind name="class" value="is_alive?(tkStatus?'$FontColorTeamkiller':'$None'):(tkStatus?'$FontColorTeamkiller':'$FontColorDead')"/>
+            
+            <style>
+                <textAlign value="right"/>
+				<width value="17px"/>
+                <marginRight value="2px"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*18)"/>
+        </block>
+        
+		<block type="text"> <!-- Ship class -->
+            <bind name="text" value="ship.subtype=='Destroyer'?'7':ship.subtype=='Cruiser'?'6':ship.subtype=='Battleship'?'5':'4'"/>
+            <styleClass value="$TextDefault"/>
+            <bind name="style" value="'textColor'; (colorClasses==2) ? (playerInfo.avatar.isAlive?(ship.subtype=='Destroyer'?'0x00FF00':ship.subtype=='Cruiser'?'0x0000FF':ship.subtype=='Battleship'?'0xFF0000':'0xFFFF00'):0x999999) : 0xFFFFFF"/>            
+            <bind name="visible" value="showClasses"/>
+			<style>
+                <width value="24"/>
+                <height value="24"/>
+                <fontFamily value="ML_WOWSSymbol"/>
+                <marginRight value="5px"/>
+				<fontSize value="18"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*26)"/>
+			<bind name="style" value="'width'; (scalePanels*34)"/>
+        </block>
+            
+         <block type="text"> <!-- Ship Level -->
+            <bind name="text" value="ship.levelRome"/>
+            <styleClass value="$FontSizeML"/>
+			<bind name="class" value="'$Bold'"/>
+            <bind name="visible" value="showLevel"/>
+            <bind name="class" value="is_alive?(tkStatus?'$FontColorTeamkiller':'$None'):(tkStatus?'$FontColorTeamkiller':'$FontColorDead')"/>
+            <style>
+                <width value="30px"/>
+                <marginRight value="5px"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*18)"/>
+			<bind name="style" value="'width'; (scalePanels*42)"/>
+        </block>
+		
+		<block type="text"> <!-- Nickname -->
+            <bind name="text" value="playerInfo.avatar.name"/>
+            <bind name="visible" value="showNickNames"/>
+			<styleClass value="$MiddleVAligned"/>
+            <styleClass value="$FontSizeML"/>            
+            <bind name="class" value="is_alive  ? (tkStatus ? '$FontColorTeamkiller': is_self || isInSameDivision ? '$FontColorGolden': '$None'): '$FontColorDead'"/>            
+            <style>
+                <multiline value="false"/>
+				<width value="60px"/>
+                <marginRight value="10px"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*18)"/>
+        </block> 
+    	
+        <block type="text"> <!-- Ship name --> 
+            <bind name="text" value="ship.nameUpper"/>
+			<bind name="visible" value="showShipNames"/>
+            <styleClass value="$FontSizeML"/>
+            <bind name="class" value="'$Bold'"/>           
+            <bind name="class" value="is_alive  ? (tkStatus ? '$FontColorTeamkiller': is_self || isInSameDivision ? '$FontColorGolden': '$None'): '$FontColorDead'"/>            
+            <style>
+				<textAlign value="right"/>
+                <multiline value="false"/>
+				<width value="110px"/>
+                <marginRight value="5px"/>
+                <align value="right"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*18)"/>
+			<bind name="style" value="'width'; (scalePanels*110)"/>
+        </block>						
+              
+		<block type="text"> <!-- Priority marker -->
+            <bind name="text" value="'B'"/>
+            <styleClass value="$TextDefault"/>
+			<bind name="visible" value="flags == 1 || flags == 4 ? true : false"/>            
+            <style>
+                <position value="absolute"/>
+				<right value="102%"/>
+				<width value="20"/>
+                <fontFamily value="ML_WOWSSymbol"/>
+                <fontSize value="18"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*26)"/>
+			<bind name="style" value="'width'; (scalePanels*26)"/>
+        </block>
+		<block type="text"> <!-- Atba marker -->
+            <bind name="text" value="'C'"/>
+            <styleClass value="$TextDefault"/>
+			<bind name="visible" value="flags == 2 ? true : false"/>            
+            <style>
+                <position value="absolute"/>
+				<right value="102%"/>
+				<width value="20"/>
+                <fontFamily value="ML_WOWSSymbol"/>
+                <fontSize value="18"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*26)"/>
+			<bind name="style" value="'width'; (scalePanels*26)"/>
+        </block>
+		<block type="text"> <!-- Priority&Atba marker -->
+            <bind name="text" value="'C'+'B'"/>
+            <styleClass value="$TextDefault"/>
+			<bind name="visible" value="flags == 3 || flags == 6 ? true : false"/>            
+            <style>
+                <position value="absolute"/>
+				<right value="102%"/>
+				<textAlign value="right"/>
+				<width value="40"/>
+                <fontFamily value="ML_WOWSSymbol"/>
+                <fontSize value="18"/>
+            </style>
+			<bind name="style" value="'fontSize'; (scalePanels*26)"/>
+			<bind name="style" value="'width'; (scalePanels*58)"/>
+        </block>									
+
+		<block><!-- ShipInfo Icons -->	
+			<style>
+				<width value="80"/>
+				<marginTop value="0px"/>
+			</style>
+			<bind name="visible" value="showParams"/>
+			<bind name="style" value="'width'; showParams ? (scalePanels*120) : '0px'"/>	
+			<bind name="style" value="'fontSize'; showParams ? (scalePanels*20) : '14'"/>			
+			<block type="text"> <!-- visibility icon -->
+				<bind name="text" value="'X'"/>
+				<styleClass value="$TextDefault"/>
+				<bind name="class" value="$None"/>
+				<styleClass value="$FontSizeML"/>
+				<bind name="visible" value="is_alive ? showParams? true : false : false"/>
+				<style>
+					<position value="absolute"/>
+					<right value="5%"/>
+					<width value="20"/>
+					<fontFamily value="ML_WOWSSymbol"/>
+					<fontSize value="12"/>
+					<marginTop value="-2px"/>
+				</style>
+				<bind name="style" value="'width'; showParams ? (scalePanels*20) : '0px'"/>
+				<bind name="style" value="'fontSize'; showParams ? (scalePanels*12) : '12'"/>
+			</block>
+			<block type="text"> <!-- artillery icon -->
+				<bind name="text" value="'F'"/>
+				<styleClass value="$TextDefault"/>
+				<bind name="class" value="$None"/>
+				<styleClass value="$FontSizeML"/>
+				<bind name="visible" value="is_alive ? showParams? (shipInfo.artillery_guns_count>0): false : false"/>
+				<style>
+					<position value="absolute"/>
+					<right value="35%"/>
+					<width value="20"/>
+					<fontFamily value="ML_WOWSSymbol"/>
+					<fontSize value="12"/>
+					<marginTop value="-1px"/>
+				</style>
+				<bind name="style" value="'width'; showParams ? (scalePanels*20) : '0px'"/>
+				<bind name="style" value="'fontSize'; showParams ? (scalePanels*12) : '12'"/>
+			</block>
+			<block type="text"> <!-- aircarrier icon -->
+				<bind name="text" value="'H'"/>
+				<styleClass value="$TextDefault"/>
+				<bind name="class" value="$None"/>
+				<styleClass value="$FontSizeML"/>
+				<bind name="visible" value="is_alive ? showParams?  (shipInfo.numSquadrons>0): false : false"/>
+				<style>
+					<position value="absolute"/>
+					<right value="35%"/>
+					<width value="20"/>
+					<fontFamily value="ML_WOWSSymbol"/>
+					<fontSize value="12"/>
+					<marginTop value="-1px"/>
+				</style>
+				<bind name="style" value="'width'; showParams ? (scalePanels*20) : '0px'"/>
+				<bind name="style" value="'fontSize'; showParams ? (scalePanels*12) : '12'"/>
+			</block>	
+			<block type="text"> <!-- torpedoes icon -->
+				<bind name="text" value="'J'"/>
+				<styleClass value="$TextDefault"/>
+				<bind name="class" value="$None"/>
+				<styleClass value="$FontSizeML"/>
+				<bind name="visible" value="is_alive ? showParams?  (shipInfo.torpedoes_guns_count>0): false : false"/>
+				<style>
+					<position value="absolute"/>
+					<right value="65%"/>
+					<width value="20"/>
+					<fontFamily value="ML_WOWSSymbol"/>
+					<fontSize value="12"/>
+					<marginTop value="-1px"/>
+				</style>
+				<bind name="style" value="'width'; showParams ? (scalePanels*20) : '0px'"/>
+				<bind name="style" value="'fontSize'; showParams ? (scalePanels*12) : '12'"/>
+			</block>		
+			
+	<!-- ShipInfo Text -->			
+			<block type="text"> <!-- visibility -->
+				<bind name="text" value="format(shipInfo.visibilityDistByShip, 1)"/>
+				<bind name="class" value="$None"/>
+				<styleClass value="$FontSizeMLSmall"/>
+				<bind name="visible" value="is_alive ? showParams? true : false : false"/>
+				<style>
+					<textAlign value="right"/>
+					<position value="absolute"/>
+					<right value="8%"/>
+					<width value="40"/>
+					<marginTop value="5px"/>
+				</style>
+				<bind name="style" value="'width'; showParams ? (scalePanels*36) : '0px'"/>
+				<bind name="style" value="'fontSize'; showParams ? (scalePanels*14) : '14'"/>
+			</block>
+			<block type="text"> <!-- artillery -->
+				<bind name="text" value="format(shipInfo.artillery_max_dist, 1)"/>
+				<bind name="class" value="$None"/>
+				<styleClass value="$FontSizeMLSmall"/>
+				<bind name="visible" value="is_alive ? showParams? (shipInfo.artillery_guns_count>0): false : false"/>
+				<style>
+					<textAlign value="right"/>
+					<position value="absolute"/>
+					<right value="38%"/>
+					<width value="40"/>
+					<marginTop value="5px"/>
+				</style>
+				<bind name="style" value="'width'; showParams ? (scalePanels*36) : '0px'"/>
+				<bind name="style" value="'fontSize'; showParams ? (scalePanels*14) : '14'"/>
+			</block>
+			<block type="text"> <!-- aircarrier -->
+				<bind name="text" value="shipInfo.numSquadrons+' / '+shipInfo.numMaxPlanes"/>
+				<bind name="class" value="$None"/>
+				<styleClass value="$FontSizeMLSmall"/>
+				<bind name="visible" value="is_alive ? showParams?  (shipInfo.numSquadrons>0): false : false"/>
+				<style>
+					<textAlign value="right"/>
+					<position value="absolute"/>
+					<right value="38%"/>
+					<width value="40"/>
+					<marginTop value="5px"/>
+				</style>
+				<bind name="style" value="'width'; showParams ? (scalePanels*66) : '0px'"/>
+				<bind name="style" value="'fontSize'; showParams ? (scalePanels*14) : '14'"/>
+			</block>	
+			<block type="text"> <!-- torpedoes -->
+				<bind name="text" value="format(shipInfo.torpedoes_max_dist, 1)"/>
+				<bind name="class" value="$None"/>
+				<styleClass value="$FontSizeMLSmall"/>
+				<bind name="visible" value="is_alive ? showParams?  (shipInfo.torpedoes_guns_count>0): false : false"/>
+				<style>
+					<textAlign value="right"/>
+					<position value="absolute"/>
+					<right value="68%"/>
+					<width value="40"/>
+					<marginTop value="5px"/>
+				</style>
+				<bind name="style" value="'width'; showParams ? (scalePanels*36) : '0px'"/>
+				<bind name="style" value="'fontSize'; showParams ? (scalePanels*14) : '14'"/>
+			</block>
+		</block>	
+
+		
+        <block> <!-- Division -->
+            <styleClass value="$MiddleVAligned"/>
+            <style>
+                <width value="15px"/> 
+            </style>
+            <block className="division_item" type="native">
+                <bind name="visible" value="division &gt; 0"/>
+                <styleClass value="$MiddleAligned"/>
+                <style>
+                    <top value="2px"/>
+                </style>
+                <bind name="gotoAndStop!" value="isInSameDivision ? divisionSign + 1 : divisionSign + 1 + 10"/>
+            </block>
+        </block>		            
+        
+        <bind name="visible" value="is_alive ? true: showKilled"/>
+        <bind name="alpha" value="(!is_alive)?0.7:1"/>            
+        <bind name="watchDH" value="'player'; ['playerInfo.player.evChanged']; playerInfo.player.playerInfo"/>
+        <bind name="watchDH" value="'mute'; ['playerInfo.avatar.evMuteChanged']; playerInfo.avatar.mute"/>            
+        <bind name="style" value="'hitTest'; true"/>
+        <bind name="tooltip" value="'ML_MouseInstructionTooltip'; { _mouseInstructions: [{_type: 'right', _instructionText: 'IDS_HINT_CLICK_TO_COMPLAIN'}], _maxWidth: 250}"/>
+        <bind name="menu" value="'ML_ComplaintMenu'; { _nickname: player.name, _mute: mute, _playerId: player.id, _isInSameDivision: isInSameDivision, _battleType: gameInfo.battleType }; null; 'contextMenuVisible'"/>
+        <bind name="dispatch" value="'buttonClick'; 'Tooltip.Close'; {}"/>
+        <bind name="name" value="'contextMenuVisible_' + !!(contextMenuVisible) + '_' + avatar.name"/>
+            
+        <style>
+            <marginBottom value="1px"/>
+            <flow value="horizontal"/>
+			<align value="right"/>
+            <height value="25px"/>
+        </style> 
+		<bind name="style" value="'height'; (scalePanels*25)"/>
+    </block>

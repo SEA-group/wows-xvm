@@ -1,0 +1,36 @@
+<block className="RightEar">
+            <style>
+                <position value="absolute"/>
+            </style>
+			<bind name="visible" value="showPanels"/>
+            <bind name="watch" value=" 'showPanels'; (userPrefs.elementsGroupExpand.showPanels == null) ? true : userPrefs.elementsGroupExpand.showPanels "/>
+			<bind name="watch" value=" 'useStats'; (userPrefs.elementsGroupExpand.useStats == null) ? true : userPrefs.elementsGroupExpand.useStats "/>
+			<bind name="watch" value=" 'showWR'; (userPrefs.elementsGroupExpand.showWR == null) ? true : userPrefs.elementsGroupExpand.showWR "/>
+			<bind name="watch" value=" 'showRating'; (userPrefs.elementsGroupExpand.showRating == null) ? true : userPrefs.elementsGroupExpand.showRating "/>
+			<bind name="watch" value=" 'showPRO'; (userPrefs.elementsGroupExpand.showPRO == null) ? true : userPrefs.elementsGroupExpand.showPRO "/>
+            <bind name="watch" value=" 'showKilled'; (userPrefs.elementsGroupExpand.showKilled == null) ? true : userPrefs.elementsGroupExpand.showKilled "/>
+            <bind name="watch" value=" 'showClasses'; (userPrefs.elementsGroupExpand.showClasses == null) ? true : userPrefs.elementsGroupExpand.showClasses "/>			
+            <bind name="watch" value=" 'showLevel'; (userPrefs.elementsGroupExpand.showLevel == null) ? true : userPrefs.elementsGroupExpand.showLevel "/>			
+			<bind name="watch" value=" 'showHP'; (userPrefs.elementsGroupExpand.showHP == null) ? true : userPrefs.elementsGroupExpand.showHP "/>
+			<bind name="watch" value=" 'showIcons'; (userPrefs.elementsGroupExpand.showIcons == null) ? false : userPrefs.elementsGroupExpand.showIcons "/>
+			<bind name="watch" value=" 'showShipNames'; (userPrefs.elementsGroupExpand.showShipNames == null) ? true : userPrefs.elementsGroupExpand.showShipNames "/>
+			<bind name="watch" value=" 'showNickNames'; (userPrefs.elementsGroupExpand.showNickNames == null) ? false : userPrefs.elementsGroupExpand.showNickNames "/>			
+			<bind name="watch" value=" 'showParams'; (userPrefs.elementsGroupExpand.showParams == null) ? false : userPrefs.elementsGroupExpand.showParams "/>
+			<bind name="watch" value=" 'showLamp'; (userPrefs.elementsGroupExpand.showLamp == null) ? true : userPrefs.elementsGroupExpand.showLamp "/>
+			<bind name="watch" value=" 'colorClasses'; (userPrefs.chatBoxWidth.colorClasses == null) ? 1 : userPrefs.chatBoxWidth.colorClasses "/>
+			<bind name="watch" value=" 'customIcons'; (userPrefs.chatBoxWidth.customIcons == null) ? 0 : userPrefs.chatBoxWidth.customIcons "/>
+			<bind name="watch" value=" 'scalePanels'; (userPrefs.chatBoxWidth.scalePanels == null) ? 0.85 : userPrefs.chatBoxWidth.scalePanels "/>
+			<bind name="watch" value=" 'heightHP'; (userPrefs.chatBoxWidth.heightHP == null) ? 100 : userPrefs.chatBoxWidth.heightHP "/>
+			<bind name="watch" value=" 'alphaHPbar'; (userPrefs.chatBoxWidth.alphaHPbar == null) ? 0.5 : userPrefs.chatBoxWidth.alphaHPbar "/>
+			<bind name="watch" value=" 'colorHP'; (userPrefs.chatBoxWidth.colorHP == null) ? 1 : userPrefs.chatBoxWidth.colorHP "/>
+            <bind name="repeat" value="enemy; 'ML_RowRendererRight'; {showShipNames:showShipNames, showNickNames:showNickNames, showIcons:showIcons,
+																		colorClasses:colorClasses, showLamp:showLamp, showHP:showHP, earIndex:indexEars, showLevel:showLevel, 
+																		scalePanels:scalePanels, customIcons:customIcons, colorHP:colorHP, showParams:showParams, showClasses:showClasses, 
+																		heightHP:heightHP, alphaHPbar:alphaHPbar, useStats:useStats, showWR:showWR, showRating:showRating, showPRO:showPRO, 
+																		showKilled:showKilled}"/>
+            <style>
+                <top value="75px"/>
+                <align value="right"/>
+                <right value="0"/>
+            </style>
+        </block>

@@ -1,0 +1,6 @@
+<block className="button_settings_small" type="native">
+				<bind name="dispatch" value="'click'; 'switchShipIconsBox'"/>
+				<params>
+					<param name="soundSet" value="dropmenu_button"/>
+				</params>
+			</block>

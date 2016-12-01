@@ -1,0 +1,571 @@
+<block className="MLSettings">
+        <bind name="visible" value="showSettingsBox"/>
+        <bind name="collectionDH" value="CC.userPrefs; 'userPrefsCollection'"/>
+        <bind name="entityDH" value="'userPrefsEntity'; userPrefsCollection[0].id"/>
+        <bind name="watchDH" value="'userPrefs'; ['userPrefsEntity.userPrefs.evUserPrefsChanged']; userPrefsEntity.userPrefs.userPrefs"/>
+        
+        <bind name="draggable" value="'SBDragZone'; 'IMPosition'; 'SB'"/>
+        <bind name="watch" value="'SBPositionX'; (userPrefs.IMPositionX.SB == null)  ? ((stageSize.x / 2) - 200) :  userPrefs.IMPositionX.SB"/>
+        <bind name="watch" value="'SBPositionY'; (userPrefs.IMPositionY.SB == null)  ? ((stageSize.y / 2) - 100) :  userPrefs.IMPositionY.SB"/>
+        <bind name="left" value="SBPositionX"/>
+        <bind name="top" value="SBPositionY"/>
+        
+        
+        <bind name="watch" value=" 'showSettingsBox'; (userPrefs.elementsGroupExpand.showSettingsBox == null) ? false : userPrefs.elementsGroupExpand.showSettingsBox "/>
+        <bind name="catch" value="'switchShipIconsBox'; { showSettingsBox: !showSettingsBox }; 'saveshowSettingsBox'"/>
+        <bind name="action" value="'saveshowSettingsBox' ; 'setUserPref' ; {value: showSettingsBox, name: 'elementsGroupExpand', subName: 'showSettingsBox'}"/>
+        
+        <bind name="appear" value="'addedToStage'; 0.6; 0; {alpha: 0}; {alpha: 1}"/>
+		
+		<bind name='file' value="'scriptsExist';'../../scripts/client/mods/ml-lastomer.pyc'"/>
+		
+        <style>
+            <position value="absolute"/>
+            <backgroundColor value="0x33001000"/>
+        </style>
+        
+        <bind name="instance" value="'DropShadow'; {}"/>
+        
+        <block className="contrast_panel" type="native">
+			<styleClass value="$FullsizeAbsolute"/>
+			<bind name="visible" value="true"/>
+			<style>
+				<marginTop value="-2px"/>
+				<marginBottom value="-2px"/>
+			</style>
+		</block>
+
+        <block> 
+            <style>
+                <marginBottom value="5px"/>
+                <marginTop value="5px"/>
+                <marginRight value="5px"/>
+                <marginLeft value="5px"/>
+            </style>
+
+            <block>
+                <block type="text">
+                    
+					<text value="Настройки"/>
+                    <styleClass value="$TextDefault"/>
+                    <style>
+						<width value="350px"/>
+                        <fontSize value="18"/>						
+                    </style>
+					<bind name="text" value="Lang=='1' ? '设置' : 'Settings'"/>
+                </block>
+				<block className="Lang">
+							<style>
+								<marginLeft value="0px"/>
+                                <marginTop value="0px"/>
+                                <marginBottom value="0px"/>
+                            </style>
+							<bind name="watch" value="'Lang'; (userPrefs.chatBoxWidth.Lang == null)? 1 : userPrefs.chatBoxWidth.Lang"/>
+                            <bind name="catch" value="'switchLang'"/>
+							<bind name="changeDispatch" value="Lang; 'saveLang'"/>				
+                            <bind name="action" value="'saveLang' ; 'setUserPref' ; {value: Lang, name: 'chatBoxWidth', subName: 'Lang'}"/>								
+					
+					<block className="tab_bar_bg" type="native">
+                                <style>
+                                    <widthByChildren value="true"/>
+                                    <heightByChildren value="true"/>
+                                </style>
+                                <block>
+                                    <style>
+                                        <marginLeft value="2px"/>
+                                        <marginRight value="2px"/>										
+                                        <flow value="horizontal"/>
+                                    </style>
+                                    <block className="MainTabSmall">
+                                        <block className="tab_bar_item_small" type="native">
+                                            <style>
+                                                <width value="45px"/>
+                                                <height value="25px"/>
+                                            </style>
+                                            <bind name="selected" value="Lang == 1"/>
+                                            <bind name="dispatch" value="'buttonClick'; 'switchLang'; {Lang: 1}"/>
+                                            <bind name="label" value="'中文'"/>
+                                        </block>
+                                    </block>
+                                    <block className="MainTabSmall">
+                                        <block className="tab_bar_item_small" type="native">
+                                            <style>
+                                                <width value="45px"/>
+                                                <height value="25px"/>
+                                            </style>
+                                            <bind name="selected" value="Lang == 2"/>
+                                            <bind name="dispatch" value="'buttonClick'; 'switchLang'; {Lang: 2}"/>
+                                            <bind name="label" value="'ENG'"/>
+                                        </block>
+                                    </block>									
+								</block>
+					</block>
+				</block>
+				
+                
+                <block>
+                    <style>
+                        <position value="absolute"/>
+                        <right value="5px"/>
+                        <marginTop value="5px"/>
+                    </style>
+                    <block className="button_close" type="native">
+                        <bind name="dispatch" value="'click'; 'switchShipIconsBox'"/>
+                    </block>
+                </block>
+                
+                <style>
+                    <width value="460px"/>
+					<flow value="horizontal"/>
+                </style>
+                
+                <bind name="instance" value="'HorizontalDivider'; {}"/>
+                <params>
+                    <param name="name" value="SBDragZone"/>
+                </params>
+            </block>
+            
+            
+            <block className="SettingsList">
+                <style>
+                    <marginRight value="5px"/>
+                    <marginLeft value="5px"/>
+                    <flow value="horizontal"/>
+                </style>
+                
+                <block className="LeftSettingColumn">
+                    <style>
+                        <width value="230"/>
+                    </style>
+                    
+                    <block className="EarsSettings">
+                        
+                        <block>
+                            <styleClass value="$Fullsize"/>
+                            <bind name="instance" value="'HorizontalDivider'; {}"/>
+                            <style>
+                                <marginBottom value="8px"/>
+                            </style>
+                        </block>
+                        
+                        
+                        <block className="showPanels">
+                            <style>
+                                <scaleX value="0.75"/>
+                                <scaleY value="0.75"/>
+                            </style>
+                            <bind name="watch" value="'showPanels'; (userPrefs.elementsGroupExpand.showPanels == null) ? true : userPrefs.elementsGroupExpand.showPanels "/>
+                            <bind name="catch" value="'switchshowPanels'; { showPanels: !showPanels }; 'saveshowPanels'"/>
+                            <bind name="action" value="'saveshowPanels' ; 'setUserPref' ; {value: showPanels, name: 'elementsGroupExpand', subName: 'showPanels'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showPanels, label: (Lang=='1' ? '显示面板' : 'Show Panels'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowPanels'"/>
+                        </block>
+							
+						<block className="showKilled">
+                            <style>
+                                <scaleX value="0.75"/>
+                                <scaleY value="0.75"/>
+                            </style>
+                            <bind name="watch" value="'showKilled'; (userPrefs.elementsGroupExpand.showKilled == null) ? true : userPrefs.elementsGroupExpand.showKilled "/>
+                            <bind name="catch" value="'switchshowKilled'; { showKilled: !showKilled }; 'saveshowKilled'"/>
+                            <bind name="action" value="'saveshowKilled' ; 'setUserPref' ; {value: showKilled, name: 'elementsGroupExpand', subName: 'showKilled'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showKilled, label: (Lang=='1' ? '击杀数' : 'Show killed'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowKilled'"/>
+                        </block>													                         
+
+						<block className="showIcons">
+                            <bind name="watch" value=" 'showIcons'; (userPrefs.elementsGroupExpand.showIcons == null) ? false : userPrefs.elementsGroupExpand.showIcons "/>
+                            <bind name="catch" value="'switchshowIconsBox'; { showIcons: !showIcons }; 'saveshowIcons'"/>
+                            <bind name="action" value="'saveshowIcons' ; 'setUserPref' ; {value: showIcons, name: 'elementsGroupExpand', subName: 'showIcons'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showIcons, label: (Lang=='1' ? '船图标' : 'Ship Icons'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowIconsBox'"/>
+                        </block>
+						
+						<block className="customIcons">
+							<bind name="style" value="'alpha'; showIcons ? 1 : 0"/>
+							<style>
+								<marginLeft value="0px"/>
+                                <marginTop value="0px"/>
+                                <marginBottom value="0px"/>
+                            </style>
+							<bind name="watch" value="'customIcons'; (userPrefs.chatBoxWidth.customIcons == null)? 0 : userPrefs.chatBoxWidth.customIcons"/>
+                            <bind name="catch" value="'switchcustomIcons'"/>
+							<bind name="changeDispatch" value="customIcons; 'savecustomIcons'"/>				
+                            <bind name="action" value="'savecustomIcons' ; 'setUserPref' ; {value: customIcons, name: 'chatBoxWidth', subName: 'customIcons'}"/>
+                            <block className="tab_bar_bg" type="native">
+                                <style>
+                                    <widthByChildren value="true"/>
+                                    <heightByChildren value="true"/>
+                                </style>
+                                <block>
+                                    <style>
+                                        <marginLeft value="2px"/>
+                                        <marginRight value="2px"/>										
+                                        <flow value="horizontal"/>
+                                    </style>
+                                    <block className="MainTabSmall">
+                                        <block className="tab_bar_item_small" type="native">
+                                            <style>
+                                                <width value="90px"/>
+                                                <height value="25px"/>
+                                            </style>
+                                            <bind name="selected" value="customIcons == 0"/>
+                                            <bind name="dispatch" value="'buttonClick'; 'switchcustomIcons'; {customIcons: 0}"/>
+                                            <bind name="label" value="'WoWs'"/>
+                                        </block>
+                                    </block>
+                                    <block className="MainTabSmall">
+                                        <block className="tab_bar_item_small" type="native">
+                                            <style>
+                                                <width value="90px"/>
+                                                <height value="25px"/>
+                                            </style>
+                                            <bind name="selected" value="customIcons == 1"/>
+                                            <bind name="dispatch" value="'buttonClick'; 'switchcustomIcons'; {customIcons: 1}"/>
+                                            <bind name="label" value="(Lang=='1' ? '自定义' : 'Custom')"/>
+                                        </block>
+                                    </block>																	
+								</block>
+							</block>
+						</block>						
+						
+						<block className="showShipNames">
+						    <bind name="watch" value="'showShipNames'; (userPrefs.elementsGroupExpand.showShipNames == null) ? true : userPrefs.elementsGroupExpand.showShipNames"/>
+                            <bind name="catch" value="'switchshowShipNamesBox'; { showShipNames: !showShipNames }; 'saveshowShipNames'"/>
+							<bind name="action" value="'saveshowShipNames' ; 'setUserPref' ; {value: showShipNames, name: 'elementsGroupExpand', subName: 'showShipNames'}"/>
+							<bind name="instance" value="'CheckBox'; {switchProperty: showShipNames, label: (Lang=='1' ? '船名' : 'Ships names'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowShipNamesBox'"/>
+                        </block>
+						
+						<block className="showNickNames">
+						    <bind name="watch" value="'showNickNames'; (userPrefs.elementsGroupExpand.showNickNames == null) ? false : userPrefs.elementsGroupExpand.showNickNames"/>
+                            <bind name="catch" value="'switchshowNickNamesBox'; { showNickNames: !showNickNames }; 'saveshowNickNames'"/>
+							<bind name="action" value="'saveshowNickNames' ; 'setUserPref' ; {value: showNickNames, name: 'elementsGroupExpand', subName: 'showNickNames'}"/>
+							<bind name="instance" value="'CheckBox'; {switchProperty: showNickNames, label: (Lang=='1' ? '玩家名' : 'Players names'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowNickNamesBox'"/>
+                        </block>                      
+						
+						<block className="showLevel">
+                            <bind name="watch" value="'showLevel'; (userPrefs.elementsGroupExpand.showLevel == null) ? true : userPrefs.elementsGroupExpand.showLevel "/>
+                            <bind name="catch" value="'switchshowLevel'; { showLevel: !showLevel }; 'saveshowLevel'"/>
+                            <bind name="action" value="'saveshowLevel' ; 'setUserPref' ; {value: showLevel, name: 'elementsGroupExpand', subName: 'showLevel'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showLevel, label: (Lang=='1' ? '船等级' : 'Ships levels'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowLevel'"/>
+                        </block>						
+						
+						<block className="showClasses">
+                            <bind name="watch" value="'showClasses'; (userPrefs.elementsGroupExpand.showClasses == null) ? true : userPrefs.elementsGroupExpand.showClasses "/>
+                            <bind name="catch" value="'switchshowClasses'; { showClasses: !showClasses }; 'saveshowClasses'"/>
+                            <bind name="action" value="'saveshowClasses' ; 'setUserPref' ; {value: showClasses, name: 'elementsGroupExpand', subName: 'showClasses'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showClasses, label: (Lang=='1' ? '船类型' : 'Ships classes'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowClasses'"/>
+                        </block>
+												
+						<block className="colorClasses">
+							<bind name="style" value="'alpha'; showClasses ? 1 : 0"/>
+							<style>
+								<marginLeft value="0px"/>
+                                <marginTop value="0px"/>
+                                <marginBottom value="0px"/>
+                            </style>
+							<bind name="watch" value="'colorClasses'; (userPrefs.chatBoxWidth.colorClasses == null)? 1 : userPrefs.chatBoxWidth.colorClasses"/>
+                            <bind name="catch" value="'switchcolorClasses'"/>
+							<bind name="changeDispatch" value="colorClasses; 'savecolorClasses'"/>				
+                            <bind name="action" value="'savecolorClasses' ; 'setUserPref' ; {value: colorClasses, name: 'chatBoxWidth', subName: 'colorClasses'}"/>
+                            <block className="tab_bar_bg" type="native">
+                                <style>
+                                    <widthByChildren value="true"/>
+                                    <heightByChildren value="true"/>
+                                </style>
+                                <block>
+                                    <style>
+                                        <marginLeft value="2px"/>
+                                        <marginRight value="2px"/>
+                                        <flow value="horizontal"/>
+                                    </style>
+                                    <block className="MainTabSmall">
+                                        <block className="tab_bar_item_small" type="native">
+                                            <style>
+                                                <width value="90px"/>
+                                                <height value="25px"/>
+                                            </style>
+                                            <bind name="selected" value="colorClasses == 1"/>
+                                            <bind name="dispatch" value="'buttonClick'; 'switchcolorClasses'; {colorClasses: 1}"/>
+                                            <bind name="label" value="(Lang=='1' ? '白色' : 'White')"/>
+                                        </block>
+                                    </block>
+                                    <block className="MainTabSmall">
+										<bind name="visible" value="nameEnabled"/>
+                                        <block className="tab_bar_item_small" type="native">
+                                            <style>
+                                                <width value="90px"/>
+                                                <height value="25px"/>
+                                            </style>
+                                            <bind name="selected" value="colorClasses == 2"/>
+                                            <bind name="dispatch" value="'buttonClick'; 'switchcolorClasses'; {colorClasses: 2}"/>
+                                            <bind name="label" value="(Lang=='1' ? '彩色' : 'Coloured')"/>
+                                        </block>
+                                    </block>
+								</block>
+							</block>
+						</block>
+						
+						<block className="showLamp"> 
+                            <bind name="watch" value=" 'showLamp'; (userPrefs.elementsGroupExpand.showLamp == null) ? true : userPrefs.elementsGroupExpand.showLamp "/>
+                            <bind name="catch" value="'switchshowLampBox'; { showLamp: !showLamp }; 'saveshowLamp'"/>
+                            <bind name="action" value="'saveshowLamp' ; 'setUserPref' ; {value: showLamp, name: 'elementsGroupExpand', subName: 'showLamp'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showLamp, label: (Lang=='1' ? '侦测状态' : 'Detector lamp '), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowLampBox'"/>
+                        </block>
+						
+						<block className="showParams">
+                            <bind name="watch" value="'showParams'; (userPrefs.elementsGroupExpand.showParams == null) ? false : userPrefs.elementsGroupExpand.showParams "/>
+                            <bind name="catch" value="'switchshowParams'; { showParams: !showParams }; 'saveshowParams'"/>
+                            <bind name="action" value="'saveshowParams' ; 'setUserPref' ; {value: showParams, name: 'elementsGroupExpand', subName: 'showParams'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showParams, label: (Lang=='1' ? '船数据 ' : 'Ships info'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowParams'"/>
+                        </block>
+												
+					</block>
+				</block>
+				
+				<block className="VerticalDivider">
+					<style>
+						<height value="100%"/>
+						<width value="3px"/>
+					</style>
+					<block className="divider_v" type="native">
+						<styleClass value="$Fullsize"/>
+					</block>
+				</block>
+				
+				<block className="RightSettingColumn">
+                    <style>
+                        <width value="230px"/>
+                        <marginLeft value="15"/>
+                    </style>		
+					
+						<block className="scalePanels">
+							<style>
+								<height value="45px"/>
+								<marginLeft value="0px"/>
+                                <marginTop value="0px"/>
+                                <marginBottom value="0px"/>
+                            </style>
+							<bind name="watch" value="'scalePanels'; (userPrefs.chatBoxWidth.scalePanels == null)? 0.85 : userPrefs.chatBoxWidth.scalePanels"/>
+                            <bind name="catch" value="'switchscalePanels'"/>
+							<bind name="changeDispatch" value="scalePanels; 'savescalePanels'"/>				
+                            <bind name="action" value="'savescalePanels' ; 'setUserPref' ; {value: scalePanels, name: 'chatBoxWidth', subName: 'scalePanels'}"/>							
+
+							<block className="slider_default" type="native">
+								<styleClass value="$FullsizeAbsolute"/>
+                                <bind name="enabled" value="true"/>
+                                <bind name="focusable" value="true"/>
+                                <bind name="value" value="'0.85'"/>			
+                                <bind name="minimum" value="'0.6'"/>			
+                                <bind name="maximum" value="'1.4'"/>			
+                                <bind name="snapping" value="false"/>																						
+                                <bind name="snapInterval" value="'0.1'"/>																																	
+                                <bind name="liveDragging" value="true"/>																																											
+                                <bind name="visible" value="true"/>										
+								<bind name="sync" value="'value'; 'valueChange'; scalePanels; 'switchscalePanels'"/>
+								<style>
+                                    <width value="200px"/>
+									<marginTop value="25px"/>
+                                </style>
+							</block>
+							<block type="text">
+								<styleClass value="$TextDefault"/>
+								<style>
+									<fontSize value="16"/>
+									<marginTop value="0px"/>
+								</style>
+								<bind name="text" value="(Lang=='1' ? '面板比例' : 'Panels scale')"/>							
+								<bind name="instance" value="'HorizontalDivider'; {}"/>
+							</block>	
+						</block>
+						
+						<block className="showHP">
+                            <bind name="watch" value=" 'showHP'; (userPrefs.elementsGroupExpand.showHP == null) ? true : userPrefs.elementsGroupExpand.showHP "/>
+                            <bind name="catch" value="'switchshowHPBox'; { showHP: !showHP }; 'saveshowHP'"/>
+                            <bind name="action" value="'saveshowHP' ; 'setUserPref' ; {value: showHP, name: 'elementsGroupExpand', subName: 'showHP'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showHP, label: (Lang=='1' ? '血条' : 'HP bars'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowHPBox'"/>
+                        </block>
+						
+						<block className="DifcolorHP">
+							<bind name="style" value="'alpha'; showHP ? 1 : 0"/>
+							<style>
+								<marginLeft value="0px"/>
+                                <marginTop value="0px"/>
+                                <marginBottom value="0px"/>
+                            </style>
+							<bind name="watch" value="'colorHP'; (userPrefs.chatBoxWidth.colorHP == null)? 1 : userPrefs.chatBoxWidth.colorHP"/>
+                            <bind name="catch" value="'switchcolorHP'"/>
+							<bind name="changeDispatch" value="colorHP; 'savecolorHP'"/>				
+                            <bind name="action" value="'savecolorHP' ; 'setUserPref' ; {value: colorHP, name: 'chatBoxWidth', subName: 'colorHP'}"/>
+                            <block className="tab_bar_bg" type="native">
+                                <style>
+                                    <widthByChildren value="true"/>
+                                    <heightByChildren value="true"/>
+                                </style>
+                                <block>
+                                    <style>
+                                        <marginLeft value="2px"/>
+                                        <marginRight value="2px"/>
+                                        <flow value="horizontal"/>
+                                    </style>
+                                    <block className="MainTabSmall">
+                                        <block className="tab_bar_item_small" type="native">
+                                            <style>
+                                                <width value="90px"/>
+                                                <height value="25px"/>
+                                            </style>
+                                            <bind name="selected" value="colorHP == 1"/>
+                                            <bind name="dispatch" value="'buttonClick'; 'switchcolorHP'; {colorHP: 1}"/>
+                                            <bind name="label" value="(Lang=='1' ? '绿色' : 'Green')"/>
+                                        </block>
+                                    </block>
+                                    <block className="MainTabSmall">
+										<bind name="visible" value="nameEnabled"/>
+                                        <block className="tab_bar_item_small" type="native">
+                                            <style>
+                                                <width value="90px"/>
+                                                <height value="25px"/>
+                                            </style>
+                                            <bind name="selected" value="colorHP == 2"/>
+                                            <bind name="dispatch" value="'buttonClick'; 'switchcolorHP'; {colorHP: 2}"/>
+                                            <bind name="label" value="(Lang=='1' ? '彩色' : 'Coloured')"/>
+                                        </block>
+                                    </block>
+								</block>
+							</block>
+						</block>
+						
+						<block className="heightHP">							
+							<bind name="style" value="'alpha'; showHP ? 1 : 0"/>
+							<style>
+								<height value="45px"/>
+	 							<marginLeft value="0px"/>
+                                <marginTop value="0px"/>
+                                <marginBottom value="0px"/>
+                            </style>
+							<bind name="watch" value="'heightHP'; (userPrefs.chatBoxWidth.heightHP == null)? 100 : userPrefs.chatBoxWidth.heightHP"/>
+                            <bind name="catch" value="'switchheightHP'"/>
+							<bind name="changeDispatch" value="heightHP; 'saveheightHP'"/>				
+                            <bind name="action" value="'saveheightHP' ; 'setUserPref' ; {value: heightHP, name: 'chatBoxWidth', subName: 'heightHP'}"/>							
+
+							<block className="slider_default" type="native">
+								<styleClass value="$FullsizeAbsolute"/>
+                                <bind name="enabled" value="true"/>
+                                <bind name="focusable" value="true"/>
+                                <bind name="value" value="'100'"/>			
+                                <bind name="minimum" value="'10'"/>			
+                                <bind name="maximum" value="'100'"/>			
+                                <bind name="snapping" value="false"/>																						
+                                <bind name="snapInterval" value="'0.1'"/>																																	
+                                <bind name="liveDragging" value="true"/>																																											
+                                <bind name="visible" value="true"/>										
+								<bind name="sync" value="'value'; 'valueChange'; heightHP; 'switchheightHP'"/>
+								<style>
+                                    <width value="200px"/>
+									<marginTop value="25px"/>
+                                </style>
+							</block>
+							<block type="text">
+								<styleClass value="$TextDefault"/>
+								<style>
+									<fontSize value="16"/>
+									<marginTop value="0px"/>
+								</style>
+								<bind name="text" value="(Lang=='1' ? '血条高度' : 'HP bars height')"/>							
+							</block>	
+						</block>
+						
+						<block className="alphaHPbarbar">
+							<bind name="style" value="'alpha'; showHP ? 1 : 0"/>
+							<style>
+								<height value="45px"/>
+	 							<marginLeft value="0px"/>
+                                <marginTop value="0px"/>
+                                <marginBottom value="0px"/>
+                            </style>
+							<bind name="watch" value="'alphaHPbar'; (userPrefs.chatBoxWidth.alphaHPbar == null)? 0.5 : userPrefs.chatBoxWidth.alphaHPbar"/>
+                            <bind name="catch" value="'switchalphaHPbar'"/>
+							<bind name="changeDispatch" value="alphaHPbar; 'savealphaHPbar'"/>				
+                            <bind name="action" value="'savealphaHPbar' ; 'setUserPref' ; {value: alphaHPbar, name: 'chatBoxWidth', subName: 'alphaHPbar'}"/>							
+
+							<block className="slider_default" type="native">
+								<styleClass value="$FullsizeAbsolute"/>
+                                <bind name="enabled" value="true"/>
+                                <bind name="focusable" value="true"/>
+                                <bind name="value" value="'0.5'"/>			
+                                <bind name="minimum" value="'0.0'"/>			
+                                <bind name="maximum" value="'1'"/>			
+                                <bind name="snapping" value="false"/>																						
+                                <bind name="snapInterval" value="'0.1'"/>																																	
+                                <bind name="liveDragging" value="true"/>																																											
+                                <bind name="visible" value="true"/>										
+								<bind name="sync" value="'value'; 'valueChange'; alphaHPbar; 'switchalphaHPbar'"/>
+								<style>
+                                    <width value="200px"/>
+									<marginTop value="25px"/>
+                                </style>
+							</block>
+							<block type="text">
+								<styleClass value="$TextDefault"/>
+								<style>
+									<fontSize value="16"/>
+									<marginTop value="0px"/>
+								</style>
+								<bind name="text" value="(Lang=='1' ? '血条透明度' : 'HP bars saturation')"/>							
+								<bind name="instance" value="'HorizontalDivider'; {}"/>
+							</block>	
+						</block>
+																														
+						<block className="useStats">
+						<bind name="visible" value="scriptsExist"/>
+                            <style>
+                                <scaleX value="0.75"/>
+                                <scaleY value="0.75"/>
+                            </style>
+                            <bind name="watch" value="'useStats'; (userPrefs.elementsGroupExpand.useStats == null) ? true : userPrefs.elementsGroupExpand.useStats "/>
+                            <bind name="catch" value="'switchuseStats'; { useStats: !useStats }; 'saveuseStats'"/>
+                            <bind name="action" value="'saveuseStats' ; 'setUserPref' ; {value: useStats, name: 'elementsGroupExpand', subName: 'useStats'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: useStats, label: (Lang=='1' ? '显示战绩' : 'Show statistics'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchuseStats'"/>
+                        </block>
+
+						<block className="showRating">
+						<bind name="style" value="'alpha'; useStats ? 1 : 0"/>
+						<bind name="visible" value="scriptsExist"/>
+                            <style>
+                                <scaleX value="0.75"/>
+                                <scaleY value="0.75"/>
+                            </style>
+                            <bind name="watch" value="'showRating'; (userPrefs.elementsGroupExpand.showRating == null) ? true : userPrefs.elementsGroupExpand.showRating "/>
+                            <bind name="catch" value="'switchshowRating'; { showRating: !showRating }; 'saveshowRating'"/>
+                            <bind name="action" value="'saveshowRating' ; 'setUserPref' ; {value: showRating, name: 'elementsGroupExpand', subName: 'showRating'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showRating, label: (Lang=='1' ? '显示效率' : 'PROalfa rating'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowRating'"/>
+                        </block>
+
+						<block className="showWR">
+						<bind name="style" value="'alpha'; useStats ? 1 : 0"/>
+						<bind name="visible" value="scriptsExist"/>
+                            <style>
+                                <scaleX value="0.75"/>
+                                <scaleY value="0.75"/>
+                            </style>
+                            <bind name="watch" value="'showWR'; (userPrefs.elementsGroupExpand.showWR == null) ? true : userPrefs.elementsGroupExpand.showWR "/>
+                            <bind name="catch" value="'switchshowWR'; { showWR: !showWR }; 'saveshowWR'"/>
+                            <bind name="action" value="'saveshowWR' ; 'setUserPref' ; {value: showWR, name: 'elementsGroupExpand', subName: 'showWR'}"/>                            
+                            <bind name="instance" value="'CheckBox'; {switchProperty: showWR, label: (Lang=='1' ? '% 胜率' : 'Winrate'), _maxTfWidth: 250}"/>
+                            <bind name="dispatch" value="'click'; 'switchshowWR'"/>
+                        </block>	
+				</block>
+            </block>
+
+            <!-- end list of settings -->
+        </block>
+    </block>

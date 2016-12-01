@@ -1,0 +1,75 @@
+<?xml version="1.0" ?><ui>	
+	
+	<xmlpath value="ml-ears-world-of-warships/ml_css_$TextDefault.xml"/>
+    
+    <xmlpath value="ml-ears-world-of-warships/ml_css_$FontSizeML.xml"/>
+    
+    <xmlpath value="ml-ears-world-of-warships/ml_css_$FontColorDead.xml"/>
+		
+	<xmlpath value="ml-ears-world-of-warships/ml_css_$FontSizeMLSmall.xml"/>
+	
+	<xmlpath value="ml-ears-world-of-warships/ml_css_$FontSizeMLBig.xml"/>
+	
+	
+    
+	<block className="root_block">        
+        
+        <bind name="collectionDH" value="CC.camera; 'cameraCollection'"/>
+		<bind name="entityDH" value="'cameraEntity'; cameraCollection[0].id"/>
+		<bind name="watchDH" value="'camera'; ['cameraEntity.camera.evTacticalStateChanged']; cameraEntity.camera"/>
+ 
+        <bind name="watch" value="'indexEars'; (userPrefs.elementsGroupExpand.indexEars == null) ? false : false"/>
+        <bind name="controller" value="MLControllers.MLEntitiesController"/>        
+        
+        <xmlpath value="ml-ears-world-of-warships/ml_block_root_block_LeftEar.xml"/>
+        
+        <xmlpath value="ml-ears-world-of-warships/ml_block_root_block_RightEar.xml"/>
+		
+	
+		<bind name="collectionDH" value="CC.userPrefs; 'userPrefsCollection'"/>
+		<bind name="entityDH" value="'userPrefsEntity'; userPrefsCollection[0].id"/>
+		<bind name="watchDH" value="'userPrefs'; ['userPrefsEntity.userPrefs.evUserPrefsChanged']; userPrefsEntity.userPrefs.userPrefs"/>
+		
+		<bind name="watch" value=" 'targetshowParams'; (userPrefs.elementsGroupExpand.targetshowParams == null) ? false : userPrefs.elementsGroupExpand.targetshowParams "/>
+		<bind name="catch" value="'switchTargetshowParamsBox'; { targetshowParams: !targetshowParams }; 'saveTargetshowParams'"/>
+		<bind name="action" value="'saveTargetshowParams' ; 'setUserPref' ; {value: targetshowParams, name: 'elementsGroupExpand', subName: 'targetshowParams'}"/>
+
+        <bind name="instance" value="'MLSettings';{userPrefs:userPrefs}"/>
+		
+		<block>		
+			<style>
+                <position value="absolute"/>
+                <top value="45px"/>
+                <left value="5px"/>
+			</style>
+            
+            <bind name="watch" value=" 'showSettingsBox'; (userPrefs.elementsGroupExpand.showSettingsBox == null) ? false : userPrefs.elementsGroupExpand.showSettingsBox "/>
+            <bind name="catch" value="'switchShipIconsBox'; { showSettingsBox: !showSettingsBox }; 'saveshowSettingsBox'"/>
+            <bind name="action" value="'saveshowSettingsBox' ; 'setUserPref' ; {value: showSettingsBox, name: 'elementsGroupExpand', subName: 'showSettingsBox'}"/>
+
+			<xmlpath value="ml-ears-world-of-warships/ml_block_block_button_settings_small.xml"/>
+		</block>
+	</block>
+    
+	<xmlpath value="ml-ears-world-of-warships/ml_block_ui_ML_RowRendererLeft.xml"/>
+    
+    <xmlpath value="ml-ears-world-of-warships/ml_block_ui_ML_RowRendererRight.xml"/>
+	
+    <xmlpath value="ml-ears-world-of-warships/ml_block_ui_MLSettings.xml"/>
+
+            
+    <!-- MENU -->
+            
+	<xmlpath value="ml-ears-world-of-warships/ml_block_ui_ML_ComplaintMenu.xml"/>
+    
+    <xmlpath value="ml-ears-world-of-warships/ml_block_ui_ML_ComplaintSubMenu.xml"/>
+	
+	<xmlpath value="ml-ears-world-of-warships/ml_block_ui_ML_PraiseSubMenu.xml"/>
+    
+    <xmlpath value="ml-ears-world-of-warships/ml_block_ui_ML_MenuTooltipBackground.xml"/>
+            
+    <xmlpath value="ml-ears-world-of-warships/ml_block_ui_ML_MouseInstructionTooltip.xml"/>
+            
+    <xmlpath value="ml-ears-world-of-warships/ml_block_ui_ML_TooltipBackground.xml"/>
+	
+</ui>

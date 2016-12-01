@@ -1,0 +1,54 @@
+<block className="MLFrags"> 		
+		
+		<bind name="collectionDH" value="CC.userPrefs; 'userPrefsCollection'"/>
+        <bind name="entityDH" value="'userPrefsEntity'; userPrefsCollection[0].id"/>
+		<bind name="watchDH" value="'userPrefs'; ['userPrefsEntity.userPrefs.evUserPrefsChanged']; userPrefsEntity.userPrefs.userPrefs"/>		
+		
+		<bind name="draggable" value="'TFDragZone'; 'IMPosition'; 'TF'"/>
+		<bind name="watch" value="'TFPositionX'; (userPrefs.IMPositionX.TF == null)  ? ((stageSize.x / 2)-10) : userPrefs.IMPositionX.TF"/>
+        <bind name="watch" value="'TFPositionY'; (userPrefs.IMPositionY.TF == null)  ? '0' :  userPrefs.IMPositionY.TF"/>
+        <bind name="left" value="TFPositionX"/>
+        <bind name="top" value="TFPositionY"/>
+		
+	<block>	
+		<bind name="controller" value="lesta.dialogs.controllers.EntitySingletonController; 'gameInfo'"/>
+        <bind name="watch" value="'showFrags'; (userPrefs.elementsGroupExpand.showFrags == null) ? true : userPrefs.elementsGroupExpand.showFrags "/>
+		<bind name="visible" value="showFrags"/>
+		
+		<block className="contrast_panel" type="native">
+			<styleClass value="$FullsizeAbsolute"/>
+			<bind name="visible" value="true"/>
+			<style>
+				<marginTop value="-2px"/>
+				<marginBottom value="-2px"/>
+			</style>
+			<bind name="style" value="'alpha'; 0.1"/>
+		</block>
+		<block>	
+			<block type="text">
+				<bind name="class" value="'$TextHeaderLargeBold'"/>
+				<bind name="text" value="gameInfo.alliedFrags"/>
+			</block>
+					
+			<block type="text">
+				<bind name="class" value="'$TextHeaderLargeBold'"/>
+				<bind name="text" value="':'"/>
+			</block>
+			
+			<block type="text">
+				<bind name="class" value="'$TextHeaderLargeBold'"/>
+				<bind name="text" value="gameInfo.enemyFrags"/>
+			</block>
+			<style>
+				<flow value="horizontal"/>
+				<top value="3px"/>
+			</style>
+			
+			<params>
+				<param name="name" value="TFDragZone"/>
+			</params>
+		</block>	
+		
+		<styleClass value="$MiddleAligned"/>
+	</block>	
+</block>
